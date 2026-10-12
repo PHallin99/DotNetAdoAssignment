@@ -1,0 +1,18 @@
+﻿namespace AdoFilmLibrary.Core;
+
+public class ProgramConstants {
+    public struct SqlQueries {
+        public const string SelectAllMovies = "SELECT Id, Name, Rating, GenreId FROM Movies";
+    }
+    
+    public struct ConsoleMessages {
+        public const string PressAnyKey = "-- Press ANY KEY to run program --";
+        public const string PressAnyKeyMarkup = "[yellow]-- Press ANY KEY to run program --[/]";
+    }
+
+    public const string HeaderAscii = """
+                                      --- Welcome to Petters ADO Movie Library Database Manager ---
+                                      """;
+
+    public const string ConnectionString = "Server=localhost;Database=petteFilmLibrary;Trusted_Connection=True;TrustServerCertificate=True;";
+}

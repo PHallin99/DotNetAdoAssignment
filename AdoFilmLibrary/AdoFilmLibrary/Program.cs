@@ -1,7 +1,10 @@
-﻿namespace AdoFilmLibrary;
+﻿using AdoFilmLibrary.MenuStateMachine.StatePattern;
 
-class Program {
-    static void Main(string[] args) {
-        Console.WriteLine("Hello, World!");
+namespace AdoFilmLibrary;
+
+public class Program {
+    private static void Main(string[] args) {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+        MenuStateContext.CreateInstance().StartContext();
     }
 }
