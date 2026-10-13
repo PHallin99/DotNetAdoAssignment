@@ -11,9 +11,9 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
         StateTransitions = [
             new StartMenuScreen(Context),
         ];
-        
+
         AnsiConsole.MarkupLine(ProgramConstants.HeaderAscii);
-        base.EnterState();
+        AnsiConsole.MarkupLineInterpolated($"[green]<State> {MenuName} Entered![/]");
     }
 
     public override void RunState() {
@@ -22,17 +22,18 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
         using var connection = new SqlConnection(ProgramConstants.ConnectionString);
         connection.Open();
         AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
-        
+
         using var command = new SqlCommand(ProgramConstants.SqlQueries.SelectAllMovies, connection);
         using var reader = command.ExecuteReader();
         while (reader.Read()) {
             var id = reader.GetInt32(0);
             var name = reader.GetString(1);
             var rating = reader.GetInt32(2);
-            AnsiConsole.MarkupLineInterpolated($"{id} Name: {name} Rating: {rating}");
+            AnsiConsole.MarkupLineInterpolated($"{id}: {name} {rating}/10");
         }
 
-        Console.ReadKey(false);
+        StateSelection = StateTransitions[0];
+        PauseForInput();
         base.RunState();
     }
 

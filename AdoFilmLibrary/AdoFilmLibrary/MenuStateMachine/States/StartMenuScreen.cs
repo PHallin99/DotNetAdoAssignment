@@ -5,13 +5,14 @@ using StateMachine;
 
 namespace AdoFilmLibrary.MenuStateMachine.States;
 
-public class StartMenuScreen(Context context) : MenuScreen("List Movies", context), IState {
+public class StartMenuScreen(Context context) : MenuScreen("Start Menu", context), IState {
     public override void EnterState() {
         AnsiConsole.MarkupLine(ProgramConstants.HeaderAscii);
         StateTransitions = [
             new ListAllMoviesScreen(Context),
             new AddMovieScreen(Context),
             new RemoveMovieScreen(Context),
+            new ExitAppScreen(Context),
         ];
 
         base.EnterState();

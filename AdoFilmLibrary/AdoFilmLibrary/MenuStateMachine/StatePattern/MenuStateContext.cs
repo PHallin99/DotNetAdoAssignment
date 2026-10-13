@@ -16,6 +16,7 @@ public class MenuStateContext : Context {
         AnsiConsole.MarkupLine("[green]App Started Successfully![/]");
         AnsiConsole.MarkupLine($"[yellow]{ProgramConstants.ConsoleMessages.PressAnyKey}[/]");
         Console.ReadKey(false);
+        AnsiConsole.Clear();
         State?.EnterState();
         State?.RunState();
     }

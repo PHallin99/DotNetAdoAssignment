@@ -11,7 +11,7 @@ public class ProgramConstants {
     }
 
     public const string HeaderAscii = """
-                                      --- Welcome to Petters ADO Movie Library Database Manager ---
+                                      --- Petters ADO Movie Library Database Manager ---
                                       """;
 
     public const string ConnectionString = "Server=localhost;Database=petteFilmLibrary;Trusted_Connection=True;TrustServerCertificate=True;";
