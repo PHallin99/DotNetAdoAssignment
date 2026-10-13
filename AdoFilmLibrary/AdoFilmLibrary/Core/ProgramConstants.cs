@@ -3,6 +3,7 @@
 public class ProgramConstants {
     public struct SqlQueries {
         public const string SelectAllMovies = "SELECT Id, Name, Rating, GenreId FROM Movies";
+        public static string SelectAllGenres = "SELECT Id, Name FROM Genres";
     }
     
     public struct ConsoleMessages {
