@@ -1,5 +1,6 @@
 ﻿using AdoFilmLibrary.Core;
 using AdoFilmLibrary.MenuStateMachine.StatePattern;
+using AdoFilmLibrary.Models;
 using AdoFilmLibrary.Services;
 using Microsoft.Data.SqlClient;
 using Spectre.Console;
@@ -18,14 +19,11 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
     }
 
     public override void RunState() {
-        // Get all movies from Movies Table
-        // Display them
         using var connection = SqlConnect.GetSqlConnection();
         connection.Open();
         AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
-
-        var allMoviesFromDb = MovieService.GetAllMoviesFromDb();
-        foreach (var movie in allMoviesFromDb) {
+        
+        foreach (var movie in MovieService.GetAllMoviesFromDb()) {
             AnsiConsole.MarkupLineInterpolated($"{movie.Id}: {movie.Name} {movie.Rating}/10");
         }
 

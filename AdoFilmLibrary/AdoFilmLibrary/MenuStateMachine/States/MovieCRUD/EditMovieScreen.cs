@@ -6,7 +6,7 @@ using Microsoft.Data.SqlClient;
 using Spectre.Console;
 using StateMachine;
 
-namespace AdoFilmLibrary.MenuStateMachine.States;
+namespace AdoFilmLibrary.MenuStateMachine.States.MovieCRUD;
 
 public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", context), IState {
     public override void EnterState() {

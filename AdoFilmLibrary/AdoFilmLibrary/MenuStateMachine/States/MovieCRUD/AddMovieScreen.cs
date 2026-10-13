@@ -6,7 +6,7 @@ using Microsoft.Data.SqlClient;
 using Spectre.Console;
 using StateMachine;
 
-namespace AdoFilmLibrary.MenuStateMachine.States;
+namespace AdoFilmLibrary.MenuStateMachine.States.MovieCRUD;
 
 public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context), IState {
 
