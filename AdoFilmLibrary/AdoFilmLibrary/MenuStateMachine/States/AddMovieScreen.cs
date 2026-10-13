@@ -45,6 +45,7 @@ public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context),
         var rowsAffected = command.ExecuteNonQuery();
         AnsiConsole.MarkupLineInterpolated($"[green]{rowsAffected} movie(s) added![/]");
         
+        connection.Close();
         StateSelection = StateTransitions[0];
         PauseForInput();
         base.RunState();

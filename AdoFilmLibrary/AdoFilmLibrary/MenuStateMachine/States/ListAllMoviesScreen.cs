@@ -19,7 +19,7 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
     public override void RunState() {
         // Get all movies from Movies Table
         // Display them
-        using var connection = new SqlConnection(ProgramConstants.ConnectionString);
+        using var connection = SqlConnect.GetSqlConnection();
         connection.Open();
         AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
 
@@ -32,6 +32,7 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
             AnsiConsole.MarkupLineInterpolated($"{id}: {name} {rating}/10");
         }
 
+        connection.Close();
         StateSelection = StateTransitions[0];
         PauseForInput();
         base.RunState();
