@@ -24,7 +24,7 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
         AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
         
         foreach (var movie in MovieService.GetAllMoviesFromDb()) {
-            AnsiConsole.MarkupLineInterpolated($"{movie.Id}: {movie.Name} {movie.Rating}/10");
+            AnsiConsole.MarkupLineInterpolated($"{movie.Name} {movie.Rating}/10");
         }
 
         connection.Close();

@@ -16,6 +16,7 @@ public class StartMenuScreen(Context context) : MenuScreen("Start Menu", context
             new RemoveMovieScreen(Context),
             new EditMovieScreen(Context),
             new AddGenreScreen(Context),
+            new RemoveGenreScreen(Context),
             new ExitAppScreen(Context),
         ];
 
