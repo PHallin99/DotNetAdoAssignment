@@ -25,7 +25,7 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
             AnsiConsole.MarkupLine("[yellow]No movies in the library! Please add movies first![/]");
         } else {
             var selectedMovie = AnsiConsole.Prompt(new SelectionPrompt<Movie>()
-                .Title("Movie To [red]Remove[/] From Library")
+                .Title("Movie To [green]Update[/] In Library")
                 .PageSize(5)
                 .MoreChoicesText("[grey](Use arrow keys to see more movies)[/]")
                 .AddChoices(allMovies)
@@ -65,6 +65,15 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
                 command.Parameters.AddWithValue("@Id", selectedMovie.Id);
                 var renameRowsAffected = command.ExecuteNonQuery();
                 AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) updated Genre![/]");
+            }
+
+            if (AnsiConsole.Confirm("Edit Movie Publishing Year?")) {
+                selectedMovie.YearOfPublication = AnsiConsole.Ask<int>("Which year?");
+                using var command = new SqlCommand("UPDATE Movies SET YearOfPublication = @YearOfPublishing WHERE Id = @Id", connection);
+                command.Parameters.AddWithValue("@YearOfPublishing", selectedMovie.YearOfPublication);
+                command.Parameters.AddWithValue("@Id", selectedMovie.Id);
+                var renameRowsAffected = command.ExecuteNonQuery();
+                AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) had their publishing year changed![/]");
             }
 
             connection.Close();
