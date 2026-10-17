@@ -24,7 +24,7 @@ public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context),
         connection.Open();
         AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
 
-        using var command = new SqlCommand("INSERT INTO Movies (Name, Rating, GenreId) Values (@Name, @Rating, @GenreId)", connection);
+        using var command = new SqlCommand("INSERT INTO Movies (MovieName, Rating, GenreId, YearOfPublication) Values (@Name, @Rating, @GenreId, @YearOfPublication)", connection);
         command.Parameters.AddWithValue("@Name", AnsiConsole.Ask<string>("Movie [green]name[/]?"));
         command.Parameters.AddWithValue("@Rating", AnsiConsole.Ask<int>("What [green]rating[/] does the movie have?"));
         command.Parameters.AddWithValue("@GenreId", 
@@ -32,6 +32,7 @@ public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context),
             .Title("What [green]Genre[/] is the movie?")
             .AddChoices(GenreService.GetAllGenresFromDb())
             .UseConverter(g => g.Name)).Id);
+        command.Parameters.AddWithValue("@YearOfPublication", AnsiConsole.Ask<int>("What year did the movie publish?"));
 
         var rowsAffected = command.ExecuteNonQuery();
         AnsiConsole.MarkupLineInterpolated($"[green]{rowsAffected} movie(s) added![/]");

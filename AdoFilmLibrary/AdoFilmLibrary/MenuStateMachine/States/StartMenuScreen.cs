@@ -1,6 +1,5 @@
 ﻿using AdoFilmLibrary.Core;
 using AdoFilmLibrary.MenuStateMachine.StatePattern;
-using AdoFilmLibrary.MenuStateMachine.States.GenreCRUD;
 using AdoFilmLibrary.MenuStateMachine.States.MovieCRUD;
 using Spectre.Console;
 using StateMachine;
@@ -15,8 +14,6 @@ public class StartMenuScreen(Context context) : MenuScreen("Start Menu", context
             new AddMovieScreen(Context),
             new RemoveMovieScreen(Context),
             new EditMovieScreen(Context),
-            new AddGenreScreen(Context),
-            new RemoveGenreScreen(Context),
             new ExitAppScreen(Context),
         ];
 

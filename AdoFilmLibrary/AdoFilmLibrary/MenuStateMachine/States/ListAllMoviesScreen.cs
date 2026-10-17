@@ -1,8 +1,6 @@
 ﻿using AdoFilmLibrary.Core;
 using AdoFilmLibrary.MenuStateMachine.StatePattern;
-using AdoFilmLibrary.Models;
 using AdoFilmLibrary.Services;
-using Microsoft.Data.SqlClient;
 using Spectre.Console;
 using StateMachine;
 
@@ -19,16 +17,22 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
     }
 
     public override void RunState() {
-        using var connection = SqlConnect.GetSqlConnection();
-        connection.Open();
-        AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
-        
-        foreach (var movie in MovieService.GetAllMoviesFromDb()) {
-            AnsiConsole.MarkupLineInterpolated($"{movie.Name} {movie.Rating}/10");
+
+        var allMovies = MovieService.GetAllMoviesFromDatabase();
+        if (allMovies.Count <= 0) {
+            AnsiConsole.MarkupLine("[yellow]No movies in the library! Please add movies first![/]");
+        } else {
+            using var connection = SqlConnect.GetSqlConnection();
+            connection.Open();
+            AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
+            foreach (var movie in MovieService.GetAllMoviesWithGenresFromDatabase()) {
+                AnsiConsole.MarkupLineInterpolated($"{movie.Name} ({movie.YearOfPublication}) - {movie.GenreName} - {movie.Rating}/10");
+            }
+
+            connection.Close();
+            AnsiConsole.MarkupLine("[red]SQL Connection Closed[/]");
         }
 
-        connection.Close();
-        AnsiConsole.MarkupLine("[red]SQL Connection Closed[/]");
         StateSelection = StateTransitions[0];
         PauseForInput();
         base.RunState();

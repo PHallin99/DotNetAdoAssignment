@@ -6,7 +6,7 @@ using Microsoft.Data.SqlClient;
 using Spectre.Console;
 using StateMachine;
 
-namespace AdoFilmLibrary.MenuStateMachine.States;
+namespace AdoFilmLibrary.MenuStateMachine.States.GenreCRUD;
 
 public class RemoveGenreScreen(Context context) : MenuScreen("Remove Genre", context), IState {
     public override void EnterState() {
@@ -23,13 +23,13 @@ public class RemoveGenreScreen(Context context) : MenuScreen("Remove Genre", con
         connection.Open();
         AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
 
-        var movie = AnsiConsole.Prompt(new SelectionPrompt<Movie>()
-            .Title("Which movie?")
-            .AddChoices(MovieService.GetAllMoviesFromDb())
-            .UseConverter(m => m.Name));
+        var genre = AnsiConsole.Prompt(new SelectionPrompt<Genre>()
+            .Title("Which genre?")
+            .AddChoices(GenreService.GetAllGenresFromDb())
+            .UseConverter(g => g.Name));
 
-        using var command = new SqlCommand("DELETE FROM Movies WHERE Id = @Id", connection);
-        command.Parameters.AddWithValue("@Id", movie.Id);
+        using var command = new SqlCommand("DELETE FROM Genres WHERE Id = @Id", connection);
+        command.Parameters.AddWithValue("@Id", genre.Id);
         var deletedRowsAffected = command.ExecuteNonQuery();
         AnsiConsole.MarkupLineInterpolated($"[green]{deletedRowsAffected} movie(s) removed from library![/]");
 
