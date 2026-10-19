@@ -164,7 +164,6 @@ GO
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - SQL Server (LocalDB, Express or full) reachable via Windows/trusted connection
-- The custom `StateMachine` project (see the caveat below)
 
 ---
 
@@ -184,17 +183,7 @@ GO
    Adjust `Server` (and credentials, if not using a trusted connection) to match
    your local SQL Server instance.
 
-3. **Restore the `StateMachine` dependency.** `AdoFilmLibrary.csproj` references
-   a project that lives *outside* this repository:
-
-   ```xml
-   <ProjectReference Include="..\..\..\..\..\RiderProjects\StateMachine\StateMachine\StateMachine.csproj" />
-   ```
-
-   A fresh clone will not build until this reference exists at that path, or is
-   replaced with your own copy of the `StateMachine` library.
-
-4. **Build and run:**
+3. **Build and run:**
 
    ```bash
    dotnet run --project AdoFilmLibrary/AdoFilmLibrary
@@ -224,9 +213,6 @@ Start Menu
 - **Hardcoded connection string.** There is no `appsettings.json` or environment
   configuration; the connection string lives in `ProgramConstants.cs` and must be
   edited per machine.
-- **External project reference.** The `StateMachine` library is referenced from a
-  path outside the repository, so the project does not build from a clean clone
-  without it.
 - **Unwired Genre screens.** `GenreCRUD/AddGenreScreen`, `EditGenreScreen` and
   `RemoveGenreScreen` exist but are not connected to any menu, so they are
   currently dead code.
