@@ -2,7 +2,6 @@
 using AdoFilmLibrary.MenuStateMachine.StatePattern;
 using AdoFilmLibrary.Models;
 using AdoFilmLibrary.Services;
-using Microsoft.Data.SqlClient;
 using Spectre.Console;
 using StateMachine;
 
@@ -23,21 +22,14 @@ public class RemoveMovieScreen(Context context) : MenuScreen("Remove Movie", con
         if (allMovies.Count <= 0) {
             AnsiConsole.MarkupLine("[yellow]No movies in the library! Please add movies first![/]");
         } else {
-            using var connection = SqlConnect.GetSqlConnection();
-            connection.Open();
-            AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
-            using var command = new SqlCommand(ProgramConstants.SqlQueries.DeleteMovieById, connection);
-            command.Parameters.AddWithValue("@Id",
-                AnsiConsole.Prompt(new SelectionPrompt<Movie>()
-                    .Title("Which Movie To Remove From Library?")
-                    .PageSize(5)
-                    .MoreChoicesText("[grey](Use arrow keys to see more movies)[/]")
-                    .AddChoices(allMovies)
-                    .UseConverter(movie => movie.Name)).Id);
+            var movieId = AnsiConsole.Prompt(new SelectionPrompt<Movie>()
+                .Title("Which Movie To Remove From Library?")
+                .PageSize(5)
+                .MoreChoicesText("[grey](Use arrow keys to see more movies)[/]")
+                .AddChoices(allMovies)
+                .UseConverter(movie => movie.Name)).Id;
 
-            var rowsAffected = command.ExecuteNonQuery();
-            connection.Close();
-            AnsiConsole.MarkupLine("[red]SQL Connection Closed[/]");
+            var rowsAffected = MovieService.RemoveMovieById(movieId);
             AnsiConsole.MarkupLineInterpolated($"[green]{rowsAffected} movie(s) removed![/]");
         }
 

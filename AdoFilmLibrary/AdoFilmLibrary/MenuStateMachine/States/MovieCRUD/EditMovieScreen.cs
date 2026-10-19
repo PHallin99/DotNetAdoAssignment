@@ -2,7 +2,6 @@
 using AdoFilmLibrary.MenuStateMachine.StatePattern;
 using AdoFilmLibrary.Models;
 using AdoFilmLibrary.Services;
-using Microsoft.Data.SqlClient;
 using Spectre.Console;
 using StateMachine;
 
@@ -32,47 +31,27 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
 
             AnsiConsole.Clear();
 
-            using var connection = SqlConnect.GetSqlConnection();
-            connection.Open();
-            if (AnsiConsole.Confirm("Edit Movie Name?")) {
-                selectedMovie.Name = AnsiConsole.Ask<string>("New Movie [green]name[/]?");
-                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieName, connection);
-                command.Parameters.AddWithValue("@Name", selectedMovie.Name);
-                command.Parameters.AddWithValue("@Id", selectedMovie.Id);
-                var renameRowsAffected = command.ExecuteNonQuery();
-                AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) renamed![/]");
-            }
+            var name = AnsiConsole.Confirm("Edit Movie Name?")
+                ? AnsiConsole.Ask<string>("New Movie [green]name[/]?")
+                : selectedMovie.Name;
 
-            if (AnsiConsole.Confirm("Edit Movie Rating?")) {
-                selectedMovie.Rating = AnsiConsole.Ask<int>("New Movie [green]rating[/]?");
-                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieRating, connection);
-                command.Parameters.AddWithValue("@Rating", selectedMovie.Rating);
-                command.Parameters.AddWithValue("@Id", selectedMovie.Id);
-                var renameRowsAffected = command.ExecuteNonQuery();
-                AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) had their rating changed![/]");
-            }
+            var rating = AnsiConsole.Confirm("Edit Movie Rating?")
+                ? AnsiConsole.Ask<int>("New Movie [green]rating[/]?")
+                : selectedMovie.Rating;
 
-            if (AnsiConsole.Confirm("Edit Movie Genre?")) {
-                selectedMovie.GenreId = AnsiConsole.Prompt(new SelectionPrompt<Genre>()
+            var genre = AnsiConsole.Confirm("Edit Movie Genre?")
+                ? selectedMovie.GenreId = AnsiConsole.Prompt(new SelectionPrompt<Genre>()
                     .Title("What [green]Genre[/] is the movie?")
                     .AddChoices(GenreService.GetAllGenresFromDb())
-                    .UseConverter(g => g.Name)).Id;
+                    .UseConverter(g => g.Name)).Id
+                : selectedMovie.GenreId;
 
-                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieGenre, connection);
-                command.Parameters.AddWithValue("@GenreId", selectedMovie.GenreId);
-                command.Parameters.AddWithValue("@Id", selectedMovie.Id);
-                var renameRowsAffected = command.ExecuteNonQuery();
-                AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) updated Genre![/]");
-            }
+            var yearOfPublishing = AnsiConsole.Confirm("Edit Movie Publishing Year?")
+                ? AnsiConsole.Ask<int>("Which year?")
+                : selectedMovie.YearOfPublication;
 
-            if (AnsiConsole.Confirm("Edit Movie Publishing Year?")) {
-                selectedMovie.YearOfPublication = AnsiConsole.Ask<int>("Which year?");
-                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieYearOfPublication, connection);
-                command.Parameters.AddWithValue("@YearOfPublishing", selectedMovie.YearOfPublication);
-                command.Parameters.AddWithValue("@Id", selectedMovie.Id);
-                var renameRowsAffected = command.ExecuteNonQuery();
-                AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) had their publishing year changed![/]");
-            }
+            var rowsAffected = MovieService.EditMovie(selectedMovie.Id, name, rating, genre, yearOfPublishing);
+            AnsiConsole.MarkupLineInterpolated($"[green]{rowsAffected} movie(s) edited![/]");
         }
 
         StateSelection = StateTransitions[0];

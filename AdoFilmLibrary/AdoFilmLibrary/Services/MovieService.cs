@@ -5,6 +5,37 @@ using Microsoft.Data.SqlClient;
 namespace AdoFilmLibrary.Services;
 
 public static class MovieService {
+    public static int AddMovie(string name, int rating, int genreId, int yearOfPublication) {
+        using var sqlConnection = SqlConnect.GetSqlConnection();
+        sqlConnection.Open();
+        using var command = new SqlCommand(ProgramConstants.SqlQueries.AddMovie, sqlConnection);
+        command.Parameters.AddWithValue("@Name", name);
+        command.Parameters.AddWithValue("@Rating", rating);
+        command.Parameters.AddWithValue("@GenreId", genreId);
+        command.Parameters.AddWithValue("@YearOfPublication", yearOfPublication);
+        return command.ExecuteNonQuery();
+    }
+
+    public static int RemoveMovieById(int id) {
+        using var sqlConnection = SqlConnect.GetSqlConnection();
+        sqlConnection.Open();
+        using var command = new SqlCommand(ProgramConstants.SqlQueries.DeleteMovieById, sqlConnection);
+        command.Parameters.AddWithValue("@Id", id);
+        return command.ExecuteNonQuery();
+    }
+
+    public static int EditMovie(int movieId, string name, int rating, int genreId, int yearOfPublishing) {
+        using var sqlConnection = SqlConnect.GetSqlConnection();
+        sqlConnection.Open();
+        using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieQuery, sqlConnection);
+        command.Parameters.AddWithValue("@Name", name);
+        command.Parameters.AddWithValue("@Rating", rating);
+        command.Parameters.AddWithValue("@GenreId", genreId);
+        command.Parameters.AddWithValue("@YearOfPublishing", yearOfPublishing);
+        command.Parameters.AddWithValue("@Id", movieId);
+        return command.ExecuteNonQuery();
+    }
+    
     public static List<Movie> GetAllMoviesFromDatabase() {
         var movies = new List<Movie>();
         using var sqlConnection = SqlConnect.GetSqlConnection();

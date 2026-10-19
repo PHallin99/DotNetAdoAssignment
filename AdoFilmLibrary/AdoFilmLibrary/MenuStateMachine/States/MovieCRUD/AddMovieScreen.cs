@@ -2,7 +2,6 @@
 using AdoFilmLibrary.MenuStateMachine.StatePattern;
 using AdoFilmLibrary.Models;
 using AdoFilmLibrary.Services;
-using Microsoft.Data.SqlClient;
 using Spectre.Console;
 using StateMachine;
 
@@ -20,25 +19,16 @@ public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context),
     }
 
     public override void RunState() {
-        using var connection = SqlConnect.GetSqlConnection();
-        connection.Open();
-        AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
-
-        using var command = new SqlCommand(ProgramConstants.SqlQueries.AddMovie, connection);
-        command.Parameters.AddWithValue("@Name", AnsiConsole.Ask<string>("Movie [green]name[/]?"));
-        command.Parameters.AddWithValue("@Rating", AnsiConsole.Ask<int>("What [green]rating[/] does the movie have?"));
-        command.Parameters.AddWithValue("@GenreId", 
-            AnsiConsole.Prompt(new SelectionPrompt<Genre>()
+        var name = AnsiConsole.Ask<string>("Movie [green]name[/]?");
+        var rating = AnsiConsole.Ask<int>("What [green]rating[/] does the movie have?");
+        var genre = AnsiConsole.Prompt(new SelectionPrompt<Genre>()
             .Title("What [green]Genre[/] is the movie?")
             .AddChoices(GenreService.GetAllGenresFromDb())
-            .UseConverter(g => g.Name)).Id);
-        command.Parameters.AddWithValue("@YearOfPublication", AnsiConsole.Ask<int>("What year did the movie publish?"));
+            .UseConverter(g => g.Name)).Id;
 
-        var rowsAffected = command.ExecuteNonQuery();
+        var yearOfPublication = AnsiConsole.Ask<int>("What year did the movie publish?");
+        var rowsAffected = MovieService.AddMovie(name, rating, genre, yearOfPublication);
         AnsiConsole.MarkupLineInterpolated($"[green]{rowsAffected} movie(s) added![/]");
-
-        connection.Close();
-        AnsiConsole.MarkupLine("[red]SQL Connection Closed[/]");
         StateSelection = StateTransitions[0];
         PauseForInput();
         base.RunState();

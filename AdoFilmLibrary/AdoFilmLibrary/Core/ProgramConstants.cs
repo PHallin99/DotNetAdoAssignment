@@ -17,10 +17,9 @@ public class ProgramConstants {
             WHERE Movies.GenreId = @GenreId";
 
         public const string AddMovie = "INSERT INTO Movies (MovieName, Rating, GenreId, YearOfPublication) Values (@Name, @Rating, @GenreId, @YearOfPublication)";
-        public const string UpdateMovieName = "UPDATE Movies SET MovieName = @Name WHERE Id = @Id";
-        public const string UpdateMovieRating = "UPDATE Movies SET Rating = @Rating WHERE Id = @Id";
-        public const string UpdateMovieGenre = "UPDATE Movies SET GenreId = @GenreId WHERE Id = @Id";
-        public const string UpdateMovieYearOfPublication = "UPDATE Movies SET YearOfPublication = @YearOfPublishing WHERE Id = @Id";
+        public const string UpdateMovieQuery = @"UPDATE Movies 
+                                                SET MovieName = @Name, Rating = @Rating, GenreId = @GenreId, YearOfPublication = @YearOfPublishing 
+                                                WHERE Id = @Id";
         public const string DeleteMovieById = "DELETE FROM Movies WHERE Id = @Id";
     }
 
