@@ -5,24 +5,15 @@ using Spectre.Console;
 namespace AdoFilmLibrary.UI;
 
 public static class UiHelpers {
-    public static void DisplayMoviesOrMessage(List<Movie> movies) {
+    public static void DisplayMoviesOrMessage(List<Movie> movies, string message) {
         if (movies.Count == 0) {
-            AnsiConsole.MarkupLine(ProgramConstants.ConsoleMessages.NoMovies);
+            AnsiConsole.MarkupLine(message);
             return;
         }
 
         DisplayMoviesTable(movies);
     }
-
-    public static void DisplayMoviesInGenreOrMessage(List<Movie> movies) {
-        if (movies.Count == 0) {
-            AnsiConsole.MarkupLine(ProgramConstants.ConsoleMessages.NoMoviesInGenre);
-            return;
-        }
-
-        DisplayMoviesTable(movies);
-    }
-
+    
     public static void DisplayMoviesTable(List<Movie> movies) {
         var table = new Table();
         table.AddColumn("Name");

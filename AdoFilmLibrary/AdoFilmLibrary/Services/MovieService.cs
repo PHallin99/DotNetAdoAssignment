@@ -7,7 +7,7 @@ namespace AdoFilmLibrary.Services;
 public static class MovieService {
     public static List<Movie> GetAllMoviesFromDatabase() {
         var movies = new List<Movie>();
-        var sqlConnection = SqlConnect.GetSqlConnection();
+        using var sqlConnection = SqlConnect.GetSqlConnection();
         sqlConnection.Open();
         using var allMoviesCommand = new SqlCommand(ProgramConstants.SqlQueries.SelectAllMovies, sqlConnection);
         using var reader = allMoviesCommand.ExecuteReader();
@@ -18,7 +18,6 @@ public static class MovieService {
                 Rating = reader.GetInt32(2),
             });
 
-        sqlConnection.Close();
         return movies;
     }
 
@@ -31,15 +30,14 @@ public static class MovieService {
         while (reader.Read()) {
             genres.Add(new Movie {
                 Id = 0, // Data not available from query - Query for display only
-                Name = reader["MovieName"].ToString(),
+                Name = reader["MovieName"].ToString() ?? string.Empty,
                 Rating = Convert.ToInt32(reader["Rating"]),
                 GenreId = 0, // Data not available from query - Query for display only
-                GenreName = reader["GenreName"].ToString(),
+                GenreName = reader["GenreName"].ToString() ?? string.Empty,
                 YearOfPublication = Convert.ToInt32(reader["YearOfPublication"]),
             });
         }
 
-        sqlConnection.Close();
         return genres;
     }
 
@@ -54,15 +52,14 @@ public static class MovieService {
             moviesByGenre.Add(
                 new Movie {
                     Id = 0, // Data not available from query - Query for display only
-                    Name = reader["MovieName"].ToString(),
+                    Name = reader["MovieName"].ToString() ?? string.Empty,
                     Rating = Convert.ToInt32(reader["Rating"]),
                     GenreId = 0, // Data not available from query - Query for display only
-                    GenreName = reader["GenreName"].ToString(),
+                    GenreName = reader["GenreName"].ToString() ?? string.Empty,
                     YearOfPublication = Convert.ToInt32(reader["YearOfPublication"]),
                 });
         }
 
-        sqlConnection.Close();
         return moviesByGenre;
     }
 }

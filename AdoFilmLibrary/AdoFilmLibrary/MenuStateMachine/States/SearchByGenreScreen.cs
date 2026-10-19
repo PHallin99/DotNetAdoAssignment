@@ -30,7 +30,7 @@ public class SearchByGenreScreen(Context context) : MenuScreen("Search By Genre"
                     .UseConverter(g => g.Name)
             );
 
-            UiHelpers.DisplayMoviesInGenreOrMessage(MovieService.GetAllMoviesFromGenre(selectedGenre));
+            UiHelpers.DisplayMoviesOrMessage(MovieService.GetAllMoviesFromGenre(selectedGenre), ProgramConstants.ConsoleMessages.NoMoviesInGenre);
         }
 
         StateSelection = StateTransitions[0];

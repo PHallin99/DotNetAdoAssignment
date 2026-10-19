@@ -7,7 +7,7 @@ namespace AdoFilmLibrary.Services;
 public static class GenreService {
     public static List<Genre> GetAllGenresFromDb() {
         var genres = new List<Genre>();
-        var sqlConnection = SqlConnect.GetSqlConnection();
+        using var sqlConnection = SqlConnect.GetSqlConnection();
         sqlConnection.Open();
         using var allGenresCommand = new SqlCommand(ProgramConstants.SqlQueries.SelectAllGenres, sqlConnection);
         using var reader = allGenresCommand.ExecuteReader();
@@ -18,7 +18,6 @@ public static class GenreService {
             });
         }
 
-        sqlConnection.Close();
         return genres;
     }
 }

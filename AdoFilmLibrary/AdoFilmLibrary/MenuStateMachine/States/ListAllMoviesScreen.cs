@@ -19,7 +19,7 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
 
     public override void RunState() {
         var allMovies = MovieService.GetAllMoviesWithGenresFromDatabase();
-        UiHelpers.DisplayMoviesOrMessage(allMovies);
+        UiHelpers.DisplayMoviesOrMessage(allMovies, ProgramConstants.ConsoleMessages.NoMovies);
         StateSelection = StateTransitions[0];
         PauseForInput();
         base.RunState();
