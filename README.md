@@ -62,7 +62,6 @@ Program
 ```
 AdoFilmLibrary/
 ├── AdoFilmLibrary.sln
-├── Tasks.md                              # Assignment checklist (Swedish)
 └── AdoFilmLibrary/
     ├── Program.cs                        # Entry point
     ├── Core/
