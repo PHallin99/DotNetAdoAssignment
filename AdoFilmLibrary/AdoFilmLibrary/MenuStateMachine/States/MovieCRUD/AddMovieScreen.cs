@@ -20,11 +20,11 @@ public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context),
     }
 
     public override void RunState() {
-        using var connection = new SqlConnection(ProgramConstants.ConnectionString);
+        using var connection = SqlConnect.GetSqlConnection();
         connection.Open();
         AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
 
-        using var command = new SqlCommand("INSERT INTO Movies (MovieName, Rating, GenreId, YearOfPublication) Values (@Name, @Rating, @GenreId, @YearOfPublication)", connection);
+        using var command = new SqlCommand(ProgramConstants.SqlQueries.AddMovie, connection);
         command.Parameters.AddWithValue("@Name", AnsiConsole.Ask<string>("Movie [green]name[/]?"));
         command.Parameters.AddWithValue("@Rating", AnsiConsole.Ask<int>("What [green]rating[/] does the movie have?"));
         command.Parameters.AddWithValue("@GenreId", 

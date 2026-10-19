@@ -26,7 +26,7 @@ public class RemoveMovieScreen(Context context) : MenuScreen("Remove Movie", con
             using var connection = SqlConnect.GetSqlConnection();
             connection.Open();
             AnsiConsole.MarkupLine("[green]SQL Connection Open[/]");
-            using var command = new SqlCommand("DELETE FROM Movies WHERE Id = @Id", connection);
+            using var command = new SqlCommand(ProgramConstants.SqlQueries.DeleteMovieById, connection);
             command.Parameters.AddWithValue("@Id",
                 AnsiConsole.Prompt(new SelectionPrompt<Movie>()
                     .Title("Which Movie To Remove From Library?")

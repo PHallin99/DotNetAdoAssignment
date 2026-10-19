@@ -36,7 +36,7 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
             connection.Open();
             if (AnsiConsole.Confirm("Edit Movie Name?")) {
                 selectedMovie.Name = AnsiConsole.Ask<string>("New Movie [green]name[/]?");
-                using var command = new SqlCommand("UPDATE Movies SET MovieName = @Name WHERE Id = @Id", connection);
+                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieName, connection);
                 command.Parameters.AddWithValue("@Name", selectedMovie.Name);
                 command.Parameters.AddWithValue("@Id", selectedMovie.Id);
                 var renameRowsAffected = command.ExecuteNonQuery();
@@ -45,7 +45,7 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
 
             if (AnsiConsole.Confirm("Edit Movie Rating?")) {
                 selectedMovie.Rating = AnsiConsole.Ask<int>("New Movie [green]rating[/]?");
-                using var command = new SqlCommand("UPDATE Movies SET Rating = @Rating WHERE Id = @Id", connection);
+                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieRating, connection);
                 command.Parameters.AddWithValue("@Rating", selectedMovie.Rating);
                 command.Parameters.AddWithValue("@Id", selectedMovie.Id);
                 var renameRowsAffected = command.ExecuteNonQuery();
@@ -58,7 +58,7 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
                     .AddChoices(GenreService.GetAllGenresFromDb())
                     .UseConverter(g => g.Name)).Id;
 
-                using var command = new SqlCommand("UPDATE Movies SET GenreId = @GenreId WHERE Id = @Id", connection);
+                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieGenre, connection);
                 command.Parameters.AddWithValue("@GenreId", selectedMovie.GenreId);
                 command.Parameters.AddWithValue("@Id", selectedMovie.Id);
                 var renameRowsAffected = command.ExecuteNonQuery();
@@ -67,7 +67,7 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
 
             if (AnsiConsole.Confirm("Edit Movie Publishing Year?")) {
                 selectedMovie.YearOfPublication = AnsiConsole.Ask<int>("Which year?");
-                using var command = new SqlCommand("UPDATE Movies SET YearOfPublication = @YearOfPublishing WHERE Id = @Id", connection);
+                using var command = new SqlCommand(ProgramConstants.SqlQueries.UpdateMovieYearOfPublication, connection);
                 command.Parameters.AddWithValue("@YearOfPublishing", selectedMovie.YearOfPublication);
                 command.Parameters.AddWithValue("@Id", selectedMovie.Id);
                 var renameRowsAffected = command.ExecuteNonQuery();
