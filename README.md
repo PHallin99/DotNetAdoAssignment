@@ -220,8 +220,6 @@ Start Menu
 - **Data access spread out.** `MovieService`/`GenreService` handle reads, but some
   `INSERT`/`UPDATE`/`DELETE` statements still live directly in the screen classes
   rather than in the service layer.
-- **`Tasks.md`** is the original (Swedish) assignment checklist and is partly out
-  of date — several items it marks as open are already implemented.
 
 ---
 
