@@ -50,8 +50,4 @@ public class EditGenreScreen(Context context) : MenuScreen("Edit Genre", context
         PauseForInput();
         base.RunState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

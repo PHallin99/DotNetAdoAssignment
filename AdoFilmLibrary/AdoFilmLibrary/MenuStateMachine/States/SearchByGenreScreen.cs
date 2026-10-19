@@ -20,25 +20,21 @@ public class SearchByGenreScreen(Context context) : MenuScreen("Search By Genre"
 
     public override void RunState() {
         var allGenres = GenreService.GetAllGenresFromDb();
-        var selectedGenre = AnsiConsole.Prompt(
-            new SelectionPrompt<Genre>()
-                .Title("Please select genre to search with!")
-                .AddChoices(allGenres)
-                .UseConverter(g => g.Name)
-        );
-
-        if (!MovieService.HasAnyMovies()) {
-            AnsiConsole.MarkupLine("[yellow]No Movies in library[/] [green]Please add movies first![/]");
+        if (allGenres.Count == 0) {
+            AnsiConsole.MarkupLine(ProgramConstants.ConsoleErrors.NoGenres);
         } else {
-            UiHelpers.DisplayMoviesTable(MovieService.GetAllMoviesFromGenre(selectedGenre));
+            var selectedGenre = AnsiConsole.Prompt(
+                new SelectionPrompt<Genre>()
+                    .Title("Please select genre to search with!")
+                    .AddChoices(allGenres)
+                    .UseConverter(g => g.Name)
+            );
+
+            UiHelpers.DisplayMoviesInGenreOrMessage(MovieService.GetAllMoviesFromGenre(selectedGenre));
         }
 
         StateSelection = StateTransitions[0];
         PauseForInput();
         base.RunState();
-    }
-
-    public string GetName() {
-        return MenuName;
     }
 }

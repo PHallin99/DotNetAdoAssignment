@@ -81,8 +81,4 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
         PauseForInput();
         base.RunState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

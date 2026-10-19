@@ -23,17 +23,17 @@ public static class MovieService {
     }
 
     public static List<Movie> GetAllMoviesWithGenresFromDatabase() {
-        var sqlConnection = SqlConnect.GetSqlConnection();
+        using var sqlConnection = SqlConnect.GetSqlConnection();
         sqlConnection.Open();
         using var allJoinedMovieGenre = new SqlCommand(ProgramConstants.SqlQueries.SelectMoviesJoinedGenres, sqlConnection);
         using var reader = allJoinedMovieGenre.ExecuteReader();
         var genres = new List<Movie>();
         while (reader.Read()) {
             genres.Add(new Movie {
-                Id = 0,
+                Id = 0, // Data not available from query - Query for display only
                 Name = reader["MovieName"].ToString(),
                 Rating = Convert.ToInt32(reader["Rating"]),
-                GenreId = 0,
+                GenreId = 0, // Data not available from query - Query for display only
                 GenreName = reader["GenreName"].ToString(),
                 YearOfPublication = Convert.ToInt32(reader["YearOfPublication"]),
             });
@@ -43,13 +43,9 @@ public static class MovieService {
         return genres;
     }
 
-    public static bool HasAnyMovies() {
-        return GetAllMoviesFromDatabase().Count != 0;
-    }
-
     public static List<Movie> GetAllMoviesFromGenre(Genre selectedGenre) {
         var moviesByGenre = new List<Movie>();
-        var sqlConnection = SqlConnect.GetSqlConnection();
+        using var sqlConnection = SqlConnect.GetSqlConnection();
         sqlConnection.Open();
         using var moviesInGenreCommand = new SqlCommand(ProgramConstants.SqlQueries.SelectAllMoviesInGenreJoined, sqlConnection);
         moviesInGenreCommand.Parameters.AddWithValue("@GenreId", selectedGenre.Id);
@@ -57,10 +53,10 @@ public static class MovieService {
         while (reader.Read()) {
             moviesByGenre.Add(
                 new Movie {
-                    Id = 0,
+                    Id = 0, // Data not available from query - Query for display only
                     Name = reader["MovieName"].ToString(),
                     Rating = Convert.ToInt32(reader["Rating"]),
-                    GenreId = 0,
+                    GenreId = 0, // Data not available from query - Query for display only
                     GenreName = reader["GenreName"].ToString(),
                     YearOfPublication = Convert.ToInt32(reader["YearOfPublication"]),
                 });

@@ -39,8 +39,4 @@ public class RemoveGenreScreen(Context context) : MenuScreen("Remove Genre", con
         PauseForInput();
         base.RunState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

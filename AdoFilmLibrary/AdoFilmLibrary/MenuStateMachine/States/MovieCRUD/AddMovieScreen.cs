@@ -43,8 +43,4 @@ public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context),
         PauseForInput();
         base.RunState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

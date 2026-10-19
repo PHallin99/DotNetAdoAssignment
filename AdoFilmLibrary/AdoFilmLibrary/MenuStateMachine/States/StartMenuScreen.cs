@@ -20,8 +20,4 @@ public class StartMenuScreen(Context context) : MenuScreen("Start Menu", context
 
         base.EnterState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

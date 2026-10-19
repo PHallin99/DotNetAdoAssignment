@@ -17,8 +17,4 @@ public class ExitAppScreen(Context context) : MenuScreen("Exit App", context), I
 
     public override void ExitState() {
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

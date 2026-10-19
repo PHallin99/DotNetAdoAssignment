@@ -14,7 +14,7 @@ public abstract class MenuScreen(string menuName, Context context) {
         AnsiConsole.MarkupLineInterpolated($"[green]<State> {MenuName} Entered![/]");
         StateSelection = AnsiConsole.Prompt(new SelectionPrompt<IState>()
             .Title(MenuName)
-            .UseConverter(menu => menu.GetName())
+            .UseConverter(m => m.GetName())
             .WrapAround()
             .AddChoices(StateTransitions));
     }
@@ -27,6 +27,10 @@ public abstract class MenuScreen(string menuName, Context context) {
     public virtual void ExitState() {
         AnsiConsole.Clear();
         AnsiConsole.MarkupLineInterpolated($"[green]<State> {MenuName} Exited![/]");
+    }
+
+    public string GetName() {
+        return MenuName;
     }
 
     protected static void PauseForInput() {

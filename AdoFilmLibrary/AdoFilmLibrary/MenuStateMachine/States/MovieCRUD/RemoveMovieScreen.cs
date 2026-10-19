@@ -45,8 +45,4 @@ public class RemoveMovieScreen(Context context) : MenuScreen("Remove Movie", con
         PauseForInput();
         base.RunState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

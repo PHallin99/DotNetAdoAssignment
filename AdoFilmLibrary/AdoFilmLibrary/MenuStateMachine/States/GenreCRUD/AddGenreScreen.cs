@@ -33,8 +33,4 @@ public class AddGenreScreen(Context context) : MenuScreen("Add Genre", context),
         PauseForInput();
         base.RunState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }

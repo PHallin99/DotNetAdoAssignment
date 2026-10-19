@@ -24,8 +24,4 @@ public class ListAllMoviesScreen(Context context) : MenuScreen("All Movies", con
         PauseForInput();
         base.RunState();
     }
-
-    public string GetName() {
-        return MenuName;
-    }
 }
