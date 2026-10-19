@@ -20,7 +20,7 @@ GO
 
 -- Genres (insert order defines the Ids used below)
 INSERT INTO Genres (GenreName) VALUES
-    'Action', 'Comedy', 'Drama', 'Horror', 'Sci-Fi', 'Fantasy', 'Thriller', 'Animation', 'Romance', 'Documentary';
+    ('Action'), ('Comedy'), ('Drama'), ('Horror'), ('Sci-Fi'), ('Fantasy'), ('Thriller'), ('Animation'), ('Romance'), ('Documentary');
 GO
 
 INSERT INTO Movies (MovieName, Rating, GenreId, YearOfPublication) VALUES
