@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdoFilmLibrary", "AdoFilmLibrary\AdoFilmLibrary.csproj", "{57A12992-AEF7-4F31-BD4E-B89C415512D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachine", "..\..\..\..\RiderProjects\StateMachine\StateMachine\StateMachine.csproj", "{2A85E652-337B-47F2-AD6E-E85BDEE3BE04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateMachine", "StateMachine\StateMachine.csproj", "{7AD674DD-767A-4E56-8449-30C21A8DDB54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,9 @@ Global
 		{2A85E652-337B-47F2-AD6E-E85BDEE3BE04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A85E652-337B-47F2-AD6E-E85BDEE3BE04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A85E652-337B-47F2-AD6E-E85BDEE3BE04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AD674DD-767A-4E56-8449-30C21A8DDB54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AD674DD-767A-4E56-8449-30C21A8DDB54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AD674DD-767A-4E56-8449-30C21A8DDB54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AD674DD-767A-4E56-8449-30C21A8DDB54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

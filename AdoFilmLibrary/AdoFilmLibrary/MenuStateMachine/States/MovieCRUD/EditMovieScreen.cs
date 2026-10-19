@@ -32,7 +32,7 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
 
             AnsiConsole.Clear();
 
-            using var connection = new SqlConnection(ProgramConstants.ConnectionString);
+            using var connection = SqlConnect.GetSqlConnection();
             connection.Open();
             if (AnsiConsole.Confirm("Edit Movie Name?")) {
                 selectedMovie.Name = AnsiConsole.Ask<string>("New Movie [green]name[/]?");
@@ -73,8 +73,6 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
                 var renameRowsAffected = command.ExecuteNonQuery();
                 AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) had their publishing year changed![/]");
             }
-
-            connection.Close();
         }
 
         StateSelection = StateTransitions[0];
