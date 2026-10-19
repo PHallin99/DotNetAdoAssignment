@@ -37,7 +37,7 @@ public abstract class MenuScreen(string menuName, Context context) {
 
     protected static void WriteNotFoundMarkup(string entityName) {
         AnsiConsole.Clear();
-        AnsiConsole.MarkupLine(ProgramConstants.HeaderAscii);
+        AnsiConsole.MarkupLine(ProgramConstants.ConsoleMessages.HeaderAscii);
         AnsiConsole.MarkupLineInterpolated($"[yellow]No {entityName}s found in database. Please [/][green]ADD[/] [yellow]one first![/]");
     }
 }

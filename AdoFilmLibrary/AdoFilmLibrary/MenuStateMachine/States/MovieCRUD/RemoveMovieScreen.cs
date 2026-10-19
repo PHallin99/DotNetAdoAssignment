@@ -14,7 +14,7 @@ public class RemoveMovieScreen(Context context) : MenuScreen("Remove Movie", con
             new StartMenuScreen(Context),
         ];
 
-        AnsiConsole.MarkupLine(ProgramConstants.HeaderAscii);
+        AnsiConsole.MarkupLine(ProgramConstants.ConsoleMessages.HeaderAscii);
         AnsiConsole.MarkupLineInterpolated($"[green]<State> {MenuName} Entered![/]");
     }
 

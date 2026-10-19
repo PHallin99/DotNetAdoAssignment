@@ -14,13 +14,12 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
             new StartMenuScreen(Context),
         ];
 
-        AnsiConsole.MarkupLine(ProgramConstants.HeaderAscii);
+        AnsiConsole.MarkupLine(ProgramConstants.ConsoleMessages.HeaderAscii);
         AnsiConsole.MarkupLineInterpolated($"[green]<State> {MenuName} Entered![/]");
     }
 
     public override void RunState() {
         var allMovies = MovieService.GetAllMoviesFromDatabase();
-
         if (allMovies.Count <= 0) {
             AnsiConsole.MarkupLine("[yellow]No movies in the library! Please add movies first![/]");
         } else {
@@ -50,8 +49,7 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
                 command.Parameters.AddWithValue("@Rating", selectedMovie.Rating);
                 command.Parameters.AddWithValue("@Id", selectedMovie.Id);
                 var renameRowsAffected = command.ExecuteNonQuery();
-                AnsiConsole.MarkupLineInterpolated(
-                    $"[green]{renameRowsAffected} movie(s) had their rating changed![/]");
+                AnsiConsole.MarkupLineInterpolated($"[green]{renameRowsAffected} movie(s) had their rating changed![/]");
             }
 
             if (AnsiConsole.Confirm("Edit Movie Genre?")) {

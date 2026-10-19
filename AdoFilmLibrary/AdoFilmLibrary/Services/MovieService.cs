@@ -1,7 +1,6 @@
 ﻿using AdoFilmLibrary.Core;
 using AdoFilmLibrary.Models;
 using Microsoft.Data.SqlClient;
-using Spectre.Console;
 
 namespace AdoFilmLibrary.Services;
 
@@ -24,14 +23,9 @@ public static class MovieService {
     }
 
     public static List<Movie> GetAllMoviesWithGenresFromDatabase() {
-        var joinSqlQuery = @"
-            SELECT Movies.MovieName, Movies.Rating, Genres.GenreName, Movies.YearOfPublication
-            FROM Movies
-            INNER JOIN Genres On Movies.GenreId = Genres.Id";
-
         var sqlConnection = SqlConnect.GetSqlConnection();
         sqlConnection.Open();
-        using var allJoinedMovieGenre = new SqlCommand(joinSqlQuery, sqlConnection);
+        using var allJoinedMovieGenre = new SqlCommand(ProgramConstants.SqlQueries.SelectMoviesJoinedGenres, sqlConnection);
         using var reader = allJoinedMovieGenre.ExecuteReader();
         var genres = new List<Movie>();
         while (reader.Read()) {
@@ -45,6 +39,34 @@ public static class MovieService {
             });
         }
 
+        sqlConnection.Close();
         return genres;
+    }
+
+    public static bool HasAnyMovies() {
+        return GetAllMoviesFromDatabase().Count != 0;
+    }
+
+    public static List<Movie> GetAllMoviesFromGenre(Genre selectedGenre) {
+        var moviesByGenre = new List<Movie>();
+        var sqlConnection = SqlConnect.GetSqlConnection();
+        sqlConnection.Open();
+        using var moviesInGenreCommand = new SqlCommand(ProgramConstants.SqlQueries.SelectAllMoviesInGenreJoined, sqlConnection);
+        moviesInGenreCommand.Parameters.AddWithValue("@GenreId", selectedGenre.Id);
+        using var reader = moviesInGenreCommand.ExecuteReader();
+        while (reader.Read()) {
+            moviesByGenre.Add(
+                new Movie {
+                    Id = 0,
+                    Name = reader["MovieName"].ToString(),
+                    Rating = Convert.ToInt32(reader["Rating"]),
+                    GenreId = 0,
+                    GenreName = reader["GenreName"].ToString(),
+                    YearOfPublication = Convert.ToInt32(reader["YearOfPublication"]),
+                });
+        }
+
+        sqlConnection.Close();
+        return moviesByGenre;
     }
 }

@@ -15,7 +15,7 @@ public class AddMovieScreen(Context context) : MenuScreen("Add Movie", context),
             new StartMenuScreen(Context),
         ];
 
-        AnsiConsole.MarkupLine(ProgramConstants.HeaderAscii);
+        AnsiConsole.MarkupLine(ProgramConstants.ConsoleMessages.HeaderAscii);
         AnsiConsole.MarkupLineInterpolated($"[green]<State> {MenuName} Entered![/]");
     }
 

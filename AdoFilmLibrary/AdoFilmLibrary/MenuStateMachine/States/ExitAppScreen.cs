@@ -7,7 +7,7 @@ namespace AdoFilmLibrary.MenuStateMachine.States;
 
 public class ExitAppScreen(Context context) : MenuScreen("Exit App", context), IState {
     public override void EnterState() {
-        AnsiConsole.MarkupLine(ProgramConstants.HeaderAscii);
+        AnsiConsole.MarkupLine(ProgramConstants.ConsoleMessages.HeaderAscii);
         AnsiConsole.MarkupLine("[green]Exiting app...[/]");
         Environment.Exit(0);
     }
