@@ -1,7 +1,7 @@
 # Petters ADO Movie Library Database Manager
 
-A C# .NET console application for managing a movie library — movies and their
-genres — stored in a SQL Server database. All database access is done with raw
+A C# .NET console application for managing a movie library movies and their
+genres stored in a SQL Server database. All database access is done with raw
 **ADO.NET** (`SqlConnection`, `SqlCommand`, `SqlParameter`, `SqlDataReader`).
 
 Built as an individual course assignment in *Programmering med C# .NET*.
@@ -12,14 +12,14 @@ Built as an individual course assignment in *Programmering med C# .NET*.
 
 The app is driven by an interactive, arrow-key menu:
 
-- **List all movies** — shows name, publication year, genre and rating, using an
+- **List all movies** shows name, publication year, genre and rating, using an
   `INNER JOIN` between the `Movies` and `Genres` tables.
-- **Search movies by genre** — pick a genre and see only the movies in it
+- **Search movies by genre** pick a genre and see only the movies in it
   (parameterized query with `@GenreId`).
-- **Add a movie** — enter name, rating, publication year and pick an existing genre.
-- **Edit a movie** — optionally change name, rating, genre and/or publication year.
-- **Remove a movie** — pick a movie and delete it.
-- **Exit** — close the application.
+- **Add a movie** enter name, rating, publication year and pick an existing genre.
+- **Edit a movie** optionally change name, rating, genre and/or publication year.
+- **Remove a movie** pick a movie and delete it.
+- **Exit** close the application.
 
 All values coming from the user are sent to SQL Server with
 `SqlParameter`/`AddWithValue`, so the queries are not vulnerable to SQL injection.
