@@ -62,6 +62,10 @@ Program
 ```
 AdoFilmLibrary/
 ├── AdoFilmLibrary.sln
+├── StateMachine/                         # State machine class library (sub-project)
+│   ├── StateMachine.csproj               # Class library project file
+│   ├── Context.cs                        # Abstract base context that manages states
+│   └── IState.cs                         # State interface (Enter/Run/Exit/GetName)
 └── AdoFilmLibrary/
     ├── Program.cs                        # Entry point
     ├── Core/
