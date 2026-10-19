@@ -15,7 +15,8 @@ public static class UiHelpers {
     }
     
     public static void DisplayMoviesTable(List<Movie> movies) {
-        var table = new Table();
+        var table = new Table()
+            .ShowRowSeparators();
         table.AddColumn("Name");
         table.AddColumn("Publication Year");
         table.AddColumn("Genre");
