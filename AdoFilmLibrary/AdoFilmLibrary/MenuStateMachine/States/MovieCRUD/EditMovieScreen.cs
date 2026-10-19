@@ -31,15 +31,17 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
 
             AnsiConsole.Clear();
 
+            var changed = false;
             var name = AnsiConsole.Confirm("Edit Movie Name?")
                 ? AnsiConsole.Ask<string>("New Movie [green]name[/]?")
                 : selectedMovie.Name;
+
 
             var rating = AnsiConsole.Confirm("Edit Movie Rating?")
                 ? AnsiConsole.Ask<int>("New Movie [green]rating[/]?")
                 : selectedMovie.Rating;
 
-            var genre = AnsiConsole.Confirm("Edit Movie Genre?")
+            var genreId = AnsiConsole.Confirm("Edit Movie Genre?")
                 ? selectedMovie.GenreId = AnsiConsole.Prompt(new SelectionPrompt<Genre>()
                     .Title("What [green]Genre[/] is the movie?")
                     .AddChoices(GenreService.GetAllGenresFromDb())
@@ -50,12 +52,19 @@ public class EditMovieScreen(Context context) : MenuScreen("Edit Movie Info", co
                 ? AnsiConsole.Ask<int>("Which year?")
                 : selectedMovie.YearOfPublication;
 
-            var rowsAffected = MovieService.EditMovie(selectedMovie.Id, name, rating, genre, yearOfPublishing);
-            AnsiConsole.MarkupLineInterpolated($"[green]{rowsAffected} movie(s) edited![/]");
+            changed = !name.Equals(selectedMovie.Name) ||
+                      rating != selectedMovie.Rating ||
+                      genreId != selectedMovie.GenreId ||
+                      yearOfPublishing != selectedMovie.YearOfPublication;
+
+            if (changed) {
+                var rowsAffected = MovieService.EditMovie(selectedMovie.Id, name, rating, genreId, yearOfPublishing);
+                AnsiConsole.MarkupLineInterpolated($"[green]{rowsAffected} movie(s) edited![/]");
+                PauseForInput();
+            }
         }
 
         StateSelection = StateTransitions[0];
-        PauseForInput();
         base.RunState();
     }
 }
